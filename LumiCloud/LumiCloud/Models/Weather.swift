@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Weather: Encodable {
+struct WeatherResponse: Decodable {
     let main: Temperature
-    let weather: WeatherInformation
+    //let weather: Information
 }
 
-struct Temperature: Encodable {
+struct Temperature: Decodable {
     let temp: Double
     let feels_like: Double
     let temp_min: Double
@@ -20,7 +20,7 @@ struct Temperature: Encodable {
     let humidity: Int
 }
 
-struct WeatherInformation: Encodable {
+struct Information: Decodable {
     let main: String
     let description: String
 }

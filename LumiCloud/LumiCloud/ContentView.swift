@@ -14,6 +14,18 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("Hello, world!")
+            
+            Button("Ver coordenadas") {
+                Task {
+                    let geocodingClient = GeocodingClient()
+                    let weatherClient = WeatherClient()
+                    
+                    let location = try! await geocodingClient.coordinateByCity("Alicante")
+                    let weather = try! await weatherClient.fetchWeather(location: location!)
+                    
+                    print(weather)
+                }
+            }
         }
         .padding()
     }
