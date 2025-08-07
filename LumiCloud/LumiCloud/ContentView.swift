@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var city: String = ""
+    @State private var city2: String = ""
     @State private var isFectchingWeather: Bool = false
 
     let geocodingClient = GeocodingClient()
@@ -42,37 +43,64 @@ struct ContentView: View {
                             if isFectchingWeather {
                                 await fetchWeather()
                                 isFectchingWeather = false
+                                city2 = city
                                 city = ""
                             }
                         }
                     Spacer()
                     
                     if let weather {
-                        Text(MeasurementFormatter.temperature(value: weather.temp))
-                            .font(.system(size: 64))
-                            .padding()
-                        
-                        HStack {
-                            VStack {
-                                Text("Min")
-                                Text(MeasurementFormatter.temperature(value: weather.temp_min))
-                            }
-                            .font(.title2)
-                            .padding(10)
-                            .glassEffect(.regular .interactive() .tint(.blue))
+                        VStack {
+                            Text("Sensación térmica: " + MeasurementFormatter.temperature(value: weather.feels_like))
+                                .padding(10)
+                                .font(.caption)
+                            
+                            Spacer()
                             
                             VStack {
-                                Text("Max")
-                                Text(MeasurementFormatter.temperature(value: weather.temp_max))
+                                Text(city2)
+                                Text(MeasurementFormatter.temperature(value: weather.temp))
+                                    .font(.system(size: 64))
                             }
-                            .font(.title2)
-                            .padding(10)
-                            .glassEffect(.regular .interactive() .tint(.red))
+                            
+                            HStack {
+                                GlassEffectContainer {
+                                    VStack {
+                                        Text("Min")
+                                            .font(.caption2)
+                                            .padding(5)
+                                            .offset(y: 10)
+                                        
+                                        Text(MeasurementFormatter.temperature(value: weather.temp_min))
+                                            .padding(10)
+                                            .glassEffect()
+                                    }
+                                    .font(.title3)
+                                    .padding(10)
+                                }
+                                
+                                Spacer()
+                                
+                                GlassEffectContainer {
+                                    VStack {
+                                        Text("Max")
+                                            .font(.caption2)
+                                            .padding(5)
+                                            .offset(y: 10)
+                                        
+                                        Text(MeasurementFormatter.temperature(value: weather.temp_max))
+                                            .padding(10)
+                                            .glassEffect()
+                                        
+                                    }
+                                    .font(.title3)
+                                    .padding(10)
+                                }
+                            }
                         }
-                        
-                        
-                        Text("Sensación térmica: " + MeasurementFormatter.temperature(value: weather.feels_like))
-                            .padding()
+                        .frame(width: 225, height: 275)
+                        .background(Color(.systemFill))
+                        .cornerRadius(25)
                     }
                     
                     Spacer()
