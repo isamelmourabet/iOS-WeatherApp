@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct WeatherClient {
     func fetchWeather(location: Location) async throws -> Weather {
         let(data, response) = try await URLSession.shared.data(from: APIEndpoint.endpointURL(for: .weatherByLatLon(location.lat, location.lon)))
