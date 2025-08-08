@@ -14,13 +14,16 @@ struct ContentView: View {
 
     let geocodingClient = GeocodingClient()
     let weatherClient = WeatherClient()
+    let weatherInformationClient = WeatherInformationClient()
     
     @State private var weather: Weather?
+    @State private var information: [Information?] = []
     
     private func fetchWeather() async {
         do {
             guard let location = try await geocodingClient.coordinateByCity(city) else { return }
             weather = try await weatherClient.fetchWeather(location: location)
+            information = try await weatherInformationClient.fetchWeatherInformation(location: location)
         } catch {
             print(error)
         }
@@ -47,8 +50,14 @@ struct ContentView: View {
                                 city = ""
                             }
                         }
+                    
                     Spacer()
                     
+                    if let info = information.first {
+                        Text(info!.description.localizedWeatherDescription(for: Locale(identifier: "es")))
+                            .padding()
+                    }
+                                        
                     if let weather {
                         VStack {
                             Text("Sensación térmica: " + MeasurementFormatter.temperature(value: weather.feels_like))
