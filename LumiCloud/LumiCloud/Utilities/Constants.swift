@@ -10,7 +10,7 @@ import Foundation
 struct Constants {
 
     struct Keys {
-        static let weatherAPIKey = "f60d3062e982a5927fa1dc88f6813ba6"
+        static let weatherAPIKey = "YOUR_KEY"
     }
     
 }
