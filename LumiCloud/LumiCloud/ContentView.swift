@@ -68,6 +68,7 @@ struct ContentView: View {
                             
                             VStack {
                                 Text(city2)
+                                    .font(.title)
                                 Text(MeasurementFormatter.temperature(value: weather.temp))
                                     .font(.system(size: 64))
                             }
