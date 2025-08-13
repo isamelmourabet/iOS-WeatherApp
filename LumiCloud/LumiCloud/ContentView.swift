@@ -18,12 +18,14 @@ struct ContentView: View {
     
     @State private var weather: Weather?
     @State private var information: [Information?] = []
-    
+    @State private var location: Location?
     private func fetchWeather() async {
         do {
-            guard let location = try await geocodingClient.coordinateByCity(city) else { return }
-            weather = try await weatherClient.fetchWeather(location: location)
-            information = try await weatherInformationClient.fetchWeatherInformation(location: location)
+            //guard let location = try await geocodingClient.coordinateByCity(city) else { return }
+            location = try await geocodingClient.coordinateByCity(city)
+            //cityName = location.name
+            weather = try await weatherClient.fetchWeather(location: location!)
+            information = try await weatherInformationClient.fetchWeatherInformation(location: location!)
         } catch {
             print(error)
         }
@@ -46,7 +48,6 @@ struct ContentView: View {
                             if isFectchingWeather {
                                 await fetchWeather()
                                 isFectchingWeather = false
-                                city2 = city
                                 city = ""
                             }
                         }
@@ -67,7 +68,7 @@ struct ContentView: View {
                             Spacer()
                             
                             VStack {
-                                Text(city2)
+                                Text(location?.name ?? "Error")
                                     .font(.title)
                                 Text(MeasurementFormatter.temperature(value: weather.temp))
                                     .font(.system(size: 64))
