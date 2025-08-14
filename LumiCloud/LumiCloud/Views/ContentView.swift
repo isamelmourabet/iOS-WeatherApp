@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var city: String = ""
-    @State private var city2: String = ""
     @State private var isFectchingWeather: Bool = false
 
     let geocodingClient = GeocodingClient()
@@ -19,21 +18,16 @@ struct ContentView: View {
     @State private var weather: Weather?
     @State private var information: [Information?] = []
     @State private var location: Location?
-    @State private var weatherList: [Location] = []
     
     private func fetchWeather() async {
         do {
             //guard let location = try await geocodingClient.coordinateByCity(city) else { return }
             location = try await geocodingClient.coordinateByCity(city)
-            //cityName = location.name
             weather = try await weatherClient.fetchWeather(location: location!)
-            weatherList.append(location!)
-            
             information = try await weatherInformationClient.fetchWeatherInformation(location: location!)
         } catch {
             print(error)
         }
-        
     }
     
     var body: some View {
