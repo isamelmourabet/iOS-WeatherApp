@@ -12,8 +12,7 @@ struct WeatherResponse: Decodable {
     let weather: [Information]
 }
 
-struct Weather: Decodable, Identifiable {
-    var id = UUID()
+struct Weather: Decodable {
     let temp: Double
     let feels_like: Double
     let temp_min: Double
