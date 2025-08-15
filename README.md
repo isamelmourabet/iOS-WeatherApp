@@ -11,5 +11,6 @@ DarkMode
 
 # How to use
 To test the app you'll need to set up a free account at https://openweathermap.org
+
 Once you're ready go to LumiCloud/LumiCloud/Utilities/Constants.swift and change the constant named weatherAPIKey (static let weatherAPIKey = "YOUR_KEY"
 ) from "YOUR_KEY" to your own API key.
